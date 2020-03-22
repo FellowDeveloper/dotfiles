@@ -1,0 +1,41 @@
+let mapleader = ','
+set number " show line numbers
+set hlsearch " highlight searches
+set incsearch " show search matches as you type
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Invisible characters. Show trailing whitespace and tab   
+set list " show invisible characters
+" define characters for invisibles
+"set listchars=tab:>·,trail:~,extends:>,precedes:<
+" toggle invisible characters display
+nmap <leader>l :set list!<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set tab & shift to 4 spaces, replace tabs with spaces
+set ts=4
+set sts=4
+set sw=4
+set expandtab
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" yank to clipboard
+if has("clipboard")
+  set clipboard=unnamed " copy to the system clipboard
+  if has("unnamedplus") " X11 support
+    set clipboard+=unnamedplus
+  endif
+endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins
+packadd minpac
+
+command! PackUpdate call minpac#update()
+command! PackClean call minpac#clean()
+
+call minpac#init()
+
+call minpac#add('tpope/vim-unimpaired')
+call minpac#add('junegunn/fzf')
+call minpac#add('tpope/vim-scriptease', {'type': 'opt'})
+call minpac#add('preservim/nerdtree', {'type': 'opt'})
+
