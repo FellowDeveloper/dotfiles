@@ -9,11 +9,18 @@ set number " show line numbers
 " set hlsearch " highlight searches
 set incsearch " show search matches as you type
 
+if has('nvim')
+  tnoremap <Esc> <C-\><C-n> " Get out of terminal mode with <Esc>
+  tnoremap <M-[> <Esc>      " Send <Esc> to program in terminal mode with <M-[>
+  tnoremap <C-v><Esc> <Esc> " Send <Esc> to program in terminal with <C-v><Esc>
+endif
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Invisible characters. Show trailing whitespace and tab   
+" Invisible characters. Show trailing whitespace and tab
 set list " show invisible characters
 " define characters for invisibles
 "set listchars=tab:>·,trail:~,extends:>,precedes:<
+
 " toggle invisible characters display
 nmap <leader>l :set list!<CR>
 
