@@ -4,14 +4,24 @@ set autochdir
 " Gray status bar for inactive windows:
 highlight StatusLineNC cterm=bold ctermfg=white ctermbg=darkgray
 
-let mapleader = ','
+let mapleader = ' '
+
+" Quick replace in file:
+" 1. Press * to search for word uner cursor
+" 2. Press shortcut below to replace all instances in the current file
+nnoremap <Leader>r :%s///g<Left><Left>
+
+" Quick replace in file (visual mode):
+"   press * to search for word uner cursor or a visual selection
+"   press shortcut below to replace all instances in the current file
+xnoremap <Leader>r :%s///g<Left><Left>
+
 set number " show line numbers
 " set hlsearch " highlight searches
 set incsearch " show search matches as you type
 
 if has('nvim')
-  tnoremap <Esc> <C-\><C-n> " Get out of terminal mode with <Esc>
-  tnoremap <M-[> <Esc>      " Send <Esc> to program in terminal mode with <M-[>
+  tnoremap <M-[> <C-\><C-n> " Get out of terminal
   tnoremap <C-v><Esc> <Esc> " Send <Esc> to program in terminal with <C-v><Esc>
 endif
 
@@ -50,5 +60,6 @@ call minpac#init()
 
 call minpac#add('tpope/vim-unimpaired')
 call minpac#add('junegunn/fzf')
+call minpac#add('junegunn/fzf.vim')
 call minpac#add('preservim/nerdtree')
-
+call minpac#add('k-takata/minpac', {'type': 'opt'})
