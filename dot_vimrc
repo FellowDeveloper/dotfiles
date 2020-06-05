@@ -1,5 +1,5 @@
 " Automatically change directory to current buffer
-set autochdir 
+" set autochdir 
 
 " Gray status bar for inactive windows:
 highlight StatusLineNC cterm=bold ctermfg=white ctermbg=darkgray
@@ -63,3 +63,25 @@ call minpac#add('junegunn/fzf')
 call minpac#add('junegunn/fzf.vim')
 call minpac#add('preservim/nerdtree')
 call minpac#add('k-takata/minpac', {'type': 'opt'})
+
+function! IBGSFzf(query, fullscreen)  
+  let command_fmt = '/bin/bash -c "/opt/facebook/bin/biggrep/ibgs -i %s | '. "sed 's/^fbsource[/]//'" . '"'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 0, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+command! -nargs=* -bang IBGS call IBGSFzf(<q-args>, <bang>0)
+
+function! IBGFFzf(query, fullscreen)
+  let command_fmt = '/bin/bash -c "/opt/facebook/bin/biggrep/ibgf -i %s | '. "sed 's/^fbsource[/]//'" . '"'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  call fzf#run(fzf#wrap(fzf#vim#with_preview({
+        \ 'source': initial_command,
+        \ 'sink': 'e',
+        \ 'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]
+        \})))
+endfunction
+command! -nargs=* -bang IBGF call IBGFFzf(<q-args>, <bang>0)
+
