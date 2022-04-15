@@ -27,6 +27,8 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 EDITOR=/usr/local/bin/nvim
 VISUAL=/usr/local/bin/nvim
 
+# Enable mode based cursor switch for vim-mode plugin
+VI_MODE_SET_CURSOR=true
 # Oh my zsh >>>
 
 # If you come from bash you might have to change your $PATH.
