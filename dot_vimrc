@@ -22,7 +22,7 @@ set list " show invisible characters
 set listchars=tab:>·,trail:~,extends:>,precedes:<
 
 " toggle invisible characters display
-nmap <leader>l :set list!<CR>
+nmap <Leader>l :set list!<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " set tab & shift to 4 spaces, replace tabs with spaces
@@ -55,4 +55,4 @@ call minpac#add('junegunn/fzf.vim')
 call minpac#add('preservim/nerdtree')
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 
-colorscheme tokyonight-day
+colorscheme tokyonight-moon
