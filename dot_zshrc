@@ -20,3 +20,35 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 EDITOR=/usr/local/bin/nvim
 VISUAL=/usr/local/bin/nvim
 
+# vi mode
+set -o vi
+
+###############################################################################
+# vi mode cursors 
+# By default same cursor used for insert / normal mode.
+# Zsh Line Editor (zle) commands to set beam for insert and box for normal
+NORMAL_CURSOR='\e[2 q'
+BEAM_CURSOR='\e[5 q'
+
+# Cursor shapes for vi mode
+function zle-keymap-select {
+  if [[ $KEYMAP == vicmd ]] || [[ $1 == 'block' ]]; then
+    echo -ne $NORMAL_CURSOR   # block cursor (normal mode)
+  elif [[ $KEYMAP == main ]] || [[ $KEYMAP == viins ]] || [[ $1 == 'beam' ]]; then
+    echo -ne $BEAM_CURSOR   # beam cursor (insert mode)
+  fi
+}
+zle -N zle-keymap-select
+
+# Beam cursor on new prompt / after accept-line
+function zle-line-init {
+  zle -K viins
+  echo -ne $BEAM_CURSOR
+}
+zle -N zle-line-init
+
+# Beam cursor when shell starts
+echo -ne $BEAM_CURSOR
+
+# end: vi mode cursors
+###############################################################################
