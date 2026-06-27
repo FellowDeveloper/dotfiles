@@ -1,15 +1,5 @@
-" Automatically change directory to current buffer
-" set autochdir 
-
 " Gray status bar for inactive windows:
 highlight StatusLineNC cterm=bold ctermfg=white ctermbg=darkgray
-
-let mapleader = ' '
-
-" Quick replace in file:
-" 1. Press * to search for word uner cursor
-" 2. Press shortcut below to replace all instances in the current file
-nnoremap <Leader>r :%s///g<Left><Left>
 
 " Quick replace in file (visual mode):
 "   press * to search for word uner cursor or a visual selection
@@ -29,7 +19,7 @@ endif
 " Invisible characters. Show trailing whitespace and tab
 set list " show invisible characters
 " define characters for invisibles
-"set listchars=tab:>·,trail:~,extends:>,precedes:<
+set listchars=tab:>·,trail:~,extends:>,precedes:<
 
 " toggle invisible characters display
 nmap <leader>l :set list!<CR>
@@ -59,29 +49,10 @@ command! PackClean call minpac#clean()
 call minpac#init()
 
 call minpac#add('tpope/vim-unimpaired')
+call minpac#add("folke/tokyonight.nvim")
 call minpac#add('junegunn/fzf')
 call minpac#add('junegunn/fzf.vim')
 call minpac#add('preservim/nerdtree')
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 
-function! IBGSFzf(query, fullscreen)  
-  let command_fmt = '/bin/bash -c "/opt/facebook/bin/biggrep/ibgs -i %s | '. "sed 's/^fbsource[/]//'" . '"'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 0, fzf#vim#with_preview(spec), a:fullscreen)
-endfunction
-command! -nargs=* -bang IBGS call IBGSFzf(<q-args>, <bang>0)
-
-function! IBGFFzf(query, fullscreen)
-  let command_fmt = '/bin/bash -c "/opt/facebook/bin/biggrep/ibgf -i %s | '. "sed 's/^fbsource[/]//'" . '"'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  call fzf#run(fzf#wrap(fzf#vim#with_preview({
-        \ 'source': initial_command,
-        \ 'sink': 'e',
-        \ 'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]
-        \})))
-endfunction
-command! -nargs=* -bang IBGF call IBGFFzf(<q-args>, <bang>0)
-
+colorscheme tokyonight-day
