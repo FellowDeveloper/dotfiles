@@ -53,4 +53,21 @@ echo -ne $BEAM_CURSOR
 # end: vi mode cursors
 ###############################################################################
 
+# fzf for reverse history search with C-r
 source <(fzf --zsh)
+
+###############################################################################
+# git info in status bar
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr ' ●'      # staged changes
+zstyle ':vcs_info:git:*' unstagedstr ' ✚'    # unstaged changes
+zstyle ':vcs_info:git:*' formats ' (%b%u%c)'
+zstyle ':vcs_info:git:*' actionformats ' (%b|%a%u%c)'  # shows during rebase/merge
+
+setopt PROMPT_SUBST
+PROMPT='%F{cyan}%~%f${vcs_info_msg_0_} %# '
+# end: git info in status bar
+###############################################################################
