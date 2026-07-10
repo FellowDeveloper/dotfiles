@@ -56,4 +56,8 @@ call minpac#add('preservim/nerdtree')
 call minpac#add('rebelot/kanagawa.nvim')
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 
-colorscheme kanagawa
+if has('termguicolors')
+  set termguicolors
+endif
+
+colorscheme tokyonight-moon
