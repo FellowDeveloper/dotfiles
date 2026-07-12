@@ -71,3 +71,24 @@ setopt PROMPT_SUBST
 PROMPT='%F{cyan}%~%f${vcs_info_msg_0_} %# '
 # end: git info in status bar
 ###############################################################################
+
+alias nw='cd ~/work/notes && nvim .'
+alias nwf='rg --color=always "" ~/work/notes | fzf --ansi | cut -d: -f1 | xargs nvim'
+alias nwg='rg -i "$1" ~/work/notes'
+alias nws='nvim ~/work/notes/scratch.md'
+
+# quick new work note
+# usage: nwn notes usage -> nvim ~/work/notes/YYYY-MM-DD-notes-usage.md
+nwn() {
+  local name="${*// /-}"
+  nvim ~/work/notes/$(date +%Y-%m-%d)_"$name".md
+}
+
+# --- Notes: personal ---
+alias np='cd ~/my/notes && nvim .'
+alias npf='rg --color=always "" ~/my/notes | fzf --ansi | cut -d: -f1 | xargs nvim'
+alias nps='nvim ~/my/notes/scratch.md'
+
+# --- Quick capture (append without opening editor) ---
+alias qw='echo "##kk $(date +%H:%M) —" >> ~/work/notes/scratch.md && echo "Appended to work scratch"'
+alias qp='echo "## $(date +%H:%M) —" >> ~/my//notes/scratch.md && echo "Appended to personal scratch"'
