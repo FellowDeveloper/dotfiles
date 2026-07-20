@@ -48,13 +48,8 @@ command! PackClean call minpac#clean()
 
 call minpac#init()
 
-call minpac#add('tpope/vim-unimpaired')
-call minpac#add("folke/tokyonight.nvim")
-call minpac#add('junegunn/fzf')
-call minpac#add('junegunn/fzf.vim')
-call minpac#add('preservim/nerdtree')
 call minpac#add('rebelot/kanagawa.nvim')
-call minpac#add('k-takata/minpac', {'type': 'opt'})
+call minpac#add("folke/tokyonight.nvim")
 
 if has('termguicolors')
   set termguicolors
