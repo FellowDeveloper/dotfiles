@@ -17,8 +17,8 @@ setopt HIST_VERIFY               # Don't execute immediately upon history expans
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
 # set editor to nvim
-EDITOR=/usr/local/bin/nvim
-VISUAL=/usr/local/bin/nvim
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 # vi mode
 set -o vi
@@ -85,6 +85,11 @@ nwn() {
 }
 
 # --- Notes: personal ---
+
+npn() {
+  local name="${*// /-}"
+  nvim ~/my/notes/$(date +%Y-%m-%d)_"$name".md
+}
 alias np='cd ~/my/notes && nvim .'
 alias npf='rg --color=always "" ~/my/notes | fzf --ansi | cut -d: -f1 | xargs nvim'
 alias nps='nvim ~/my/notes/scratch.md'
