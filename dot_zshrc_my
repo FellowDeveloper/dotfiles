@@ -1,0 +1,99 @@
+# save lots of history
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=10000000
+SAVEHIST=10000000
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+setopt HIST_BEEP                 # Beep when accessing nonexistent history.
+
+# set editor to nvim
+export EDITOR="nvim"
+export VISUAL="nvim"
+
+# vi mode
+set -o vi
+
+###############################################################################
+# vi mode cursors 
+# By default same cursor used for insert / normal mode.
+# Zsh Line Editor (zle) commands to set beam for insert and box for normal
+NORMAL_CURSOR='\e[2 q'
+BEAM_CURSOR='\e[5 q'
+
+# Cursor shapes for vi mode
+function zle-keymap-select {
+  if [[ $KEYMAP == vicmd ]] || [[ $1 == 'block' ]]; then
+    echo -ne $NORMAL_CURSOR   # block cursor (normal mode)
+  elif [[ $KEYMAP == main ]] || [[ $KEYMAP == viins ]] || [[ $1 == 'beam' ]]; then
+    echo -ne $BEAM_CURSOR   # beam cursor (insert mode)
+  fi
+}
+zle -N zle-keymap-select
+
+# Beam cursor on new prompt / after accept-line
+function zle-line-init {
+  zle -K viins
+  echo -ne $BEAM_CURSOR
+}
+zle -N zle-line-init
+
+# Beam cursor when shell starts
+echo -ne $BEAM_CURSOR
+
+# end: vi mode cursors
+###############################################################################
+
+# fzf for reverse history search with C-r
+source <(fzf --zsh)
+
+###############################################################################
+# git info in status bar
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr ' ●'      # staged changes
+zstyle ':vcs_info:git:*' unstagedstr ' ✚'    # unstaged changes
+zstyle ':vcs_info:git:*' formats ' (%b%u%c)'
+zstyle ':vcs_info:git:*' actionformats ' (%b|%a%u%c)'  # shows during rebase/merge
+
+setopt PROMPT_SUBST
+PROMPT='%F{cyan}%~%f${vcs_info_msg_0_} %# '
+# end: git info in status bar
+###############################################################################
+
+alias nw='cd ~/work/notes && nvim .'
+alias nwf='rg --color=always "" ~/work/notes | fzf --ansi | cut -d: -f1 | xargs nvim'
+alias nwg='rg -i "$1" ~/work/notes'
+alias nws='nvim ~/work/notes/scratch.md'
+
+# quick new work note
+# usage: nwn notes usage -> nvim ~/work/notes/YYYY-MM-DD-notes-usage.md
+nwn() {
+  local name="${*// /-}"
+  nvim ~/work/notes/$(date +%Y-%m-%d)_"$name".md
+}
+
+# --- Notes: personal ---
+
+npn() {
+  local name="${*// /-}"
+  nvim ~/my/notes/$(date +%Y-%m-%d)_"$name".md
+}
+alias np='cd ~/my/notes && nvim .'
+alias npf='rg --color=always "" ~/my/notes | fzf --ansi | cut -d: -f1 | xargs nvim'
+alias nps='nvim ~/my/notes/scratch.md'
+
+# --- Quick capture (append without opening editor) ---
+alias qw='echo "##kk $(date +%H:%M) —" >> ~/work/notes/scratch.md && echo "Appended to work scratch"'
+alias qp='echo "## $(date +%H:%M) —" >> ~/my//notes/scratch.md && echo "Appended to personal scratch"'

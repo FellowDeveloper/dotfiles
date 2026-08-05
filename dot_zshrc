@@ -1,2 +1,1 @@
-script_dir="${0:A:h}"
-source "$script_dir/dot_zshrc_common"
+source "$HOME/.zshrc_my"
