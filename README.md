@@ -1,7 +1,3 @@
-Neovim package manager:
-https://github.com/k-takata/minpac
-
-git clone https://github.com/k-takata/minpac.git ~/.config/nvim/pack/minpac/opt/minpac
 
 nvim_init.vim needs to be in ~/.config/nvim/init.vim
 
@@ -14,6 +10,8 @@ Prerequisites:
 Patched font for neo-tree
 https://www.nerdfonts.com/font-downloads
 
+brew install nvim
+brew install fzf
 brew install rg
 brew install fd
 brew install tree-sitter
