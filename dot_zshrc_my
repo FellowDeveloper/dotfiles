@@ -16,14 +16,20 @@ setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording en
 setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
+###############################################################################
+# Homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+# Homebrew: Python
+export PATH="/opt/homebrew/opt/python/libexec/bin:$PATH"
+
+###############################################################################
 # set editor to nvim
 export EDITOR="nvim"
 export VISUAL="nvim"
 
+###############################################################################
 # vi mode
 set -o vi
-
-###############################################################################
 # vi mode cursors 
 # By default same cursor used for insert / normal mode.
 # Zsh Line Editor (zle) commands to set beam for insert and box for normal
@@ -38,6 +44,7 @@ function zle-keymap-select {
     echo -ne $BEAM_CURSOR   # beam cursor (insert mode)
   fi
 }
+
 zle -N zle-keymap-select
 
 # Beam cursor on new prompt / after accept-line
@@ -45,12 +52,12 @@ function zle-line-init {
   zle -K viins
   echo -ne $BEAM_CURSOR
 }
+
 zle -N zle-line-init
 
 # Beam cursor when shell starts
 echo -ne $BEAM_CURSOR
 
-# end: vi mode cursors
 ###############################################################################
 
 # fzf for reverse history search with C-r
@@ -69,9 +76,11 @@ zstyle ':vcs_info:git:*' actionformats ' (%b|%a%u%c)'  # shows during rebase/mer
 
 setopt PROMPT_SUBST
 PROMPT='%F{cyan}%~%f${vcs_info_msg_0_} %# '
-# end: git info in status bar
-###############################################################################
 
+###############################################################################
+# notes
+
+# work notes
 alias nw='cd ~/work/notes && nvim .'
 alias nwf='rg --color=always "" ~/work/notes | fzf --ansi | cut -d: -f1 | xargs nvim'
 alias nwg='rg -i "$1" ~/work/notes'
@@ -83,17 +92,16 @@ nwn() {
   local name="${*// /-}"
   nvim ~/work/notes/$(date +%Y-%m-%d)_"$name".md
 }
+# quick capture
+alias qw='echo "##kk $(date +%H:%M) —" >> ~/work/notes/scratch.md && echo "Appended to work scratch"'
 
-# --- Notes: personal ---
+# personal notes
+alias np='cd ~/my/notes && nvim .'
+alias npf='rg --color=always "" ~/my/notes | fzf --ansi | cut -d: -f1 | xargs nvim'
+alias nps='nvim ~/my/notes/scratch.md'
 
 npn() {
   local name="${*// /-}"
   nvim ~/my/notes/$(date +%Y-%m-%d)_"$name".md
 }
-alias np='cd ~/my/notes && nvim .'
-alias npf='rg --color=always "" ~/my/notes | fzf --ansi | cut -d: -f1 | xargs nvim'
-alias nps='nvim ~/my/notes/scratch.md'
-
-# --- Quick capture (append without opening editor) ---
-alias qw='echo "##kk $(date +%H:%M) —" >> ~/work/notes/scratch.md && echo "Appended to work scratch"'
 alias qp='echo "## $(date +%H:%M) —" >> ~/my//notes/scratch.md && echo "Appended to personal scratch"'
