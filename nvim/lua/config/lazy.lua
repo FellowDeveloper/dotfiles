@@ -15,15 +15,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Set up mapleader before loading plugins (recommended for keymaps)
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
 -- Initialize lazy.nvim and tell it to load everything in the lua/plugins/ directory
 require("lazy").setup({
   spec = {
     { import = "plugins" },
   },
   -- Automatically check for plugin updates in the background
-  checker = { enabled = true }, 
+  checker = { enabled = true },
 })

@@ -1,6 +1,10 @@
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
+  -- Note: ]d, [d, grn, gra, grr, K etc. are built-in defaults since nvim 0.11+
+  keys = {
+    { "<leader>d", vim.diagnostic.open_float, desc = "Show diagnostic" },
+  },
   config = function()
     vim.lsp.enable("ruff")
 
@@ -10,9 +14,5 @@ return {
       underline = true,
       severity_sort = true,
     })
-
-    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
-    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
-    vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic" })
   end,
 }

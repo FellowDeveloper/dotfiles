@@ -6,7 +6,6 @@ vim.opt.number = true
 
 -- Search
 vim.opt.incsearch = true
--- vim.opt.hlsearch = true  -- (yours was commented out too)
 
 -- Invisible characters
 vim.opt.list = true
@@ -19,10 +18,7 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
 -- System clipboard
-vim.opt.clipboard = "unnamedplus" -- covers unnamed + unnamedplus in one go on Linux/most setups
+vim.opt.clipboard = "unnamedplus"
 
 -- True color support
 vim.opt.termguicolors = true
-
--- Statusline colors for inactive windows
-vim.cmd("highlight StatusLineNC cterm=bold ctermfg=white ctermbg=darkgray")

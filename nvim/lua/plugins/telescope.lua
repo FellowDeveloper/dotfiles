@@ -1,21 +1,19 @@
 return {
-  {
-    'nvim-telescope/telescope.nvim', version = '*',
-    dependencies = {
-        'nvim-lua/plenary.nvim',
-        -- optional but recommended
-        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-    },
-    config = function()
-      local builtin = require("telescope.builtin")
-      -- Setup keymaps using the leader key (Space)
-      vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
-      vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live Grep (Search Text)" })
-      vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find Buffers" })
-      vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Find Help Tags" })
-
-      -- Initialize telescope
-      require("telescope").setup()
-    end,
-  }
+  "nvim-telescope/telescope.nvim",
+  version = "*",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    -- optional but recommended
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+  },
+  keys = {
+    { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
+    { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live Grep (Search Text)" },
+    { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Find Buffers" },
+    { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Find Help Tags" },
+  },
+  config = function()
+    require("telescope").setup()
+    require("telescope").load_extension("fzf")
+  end,
 }

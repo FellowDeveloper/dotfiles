@@ -10,6 +10,7 @@ return {
   keys = {
     { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "Toggle Neo-tree" },
     { "<leader>o", "<cmd>Neotree focus<cr>", desc = "Focus Neo-tree" },
+    { "\\", "<cmd>Neotree toggle current reveal_force_cwd<cr>", desc = "Toggle Neo-tree at cwd" },
   },
   opts = {
     close_if_last_window = true, -- close neo-tree if it's the last window left
