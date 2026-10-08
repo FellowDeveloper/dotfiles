@@ -83,7 +83,7 @@ PROMPT='%F{cyan}%~%f${vcs_info_msg_0_} %# '
 # work notes
 alias nw='cd ~/work/notes && nvim .'
 alias nwf='rg --color=always "" ~/work/notes | fzf --ansi | cut -d: -f1 | xargs nvim'
-alias nwg='rg -i "$1" ~/work/notes'
+nwg() { rg -i "$1" ~/work/notes }
 alias nws='nvim ~/work/notes/scratch.md'
 
 # quick new work note
@@ -104,4 +104,4 @@ npn() {
   local name="${*// /-}"
   nvim ~/my/notes/$(date +%Y-%m-%d)_"$name".md
 }
-alias qp='echo "## $(date +%H:%M) —" >> ~/my//notes/scratch.md && echo "Appended to personal scratch"'
+alias qp='echo "## $(date +%H:%M) —" >> ~/my/notes/scratch.md && echo "Appended to personal scratch"'
